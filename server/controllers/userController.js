@@ -15,7 +15,7 @@ export const registerUser = async (req,res)=> {
 
      const {name,email,password} = req.body; 
      if(!name || !email || !password || password.length < 8){
-        return res.json({success:false , message:'fill all the feilds'})
+        return res.json({success:false , message:'Fill all the fields'})
      }
 
      const userExists = await User.findOne({email})
@@ -72,7 +72,7 @@ export const getUserData = async (req,res) => {
 // Get all cars for frontend
 export const getCars = async (req,res) => {
     try{
-       const cars = await Car.find({isAvaliable: true})
+       const cars = await Car.find({isAvailable: true})
        res.json({success: true, cars})
     }catch(error){
       console.log(error.message);

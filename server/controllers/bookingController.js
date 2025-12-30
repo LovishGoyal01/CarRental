@@ -1,12 +1,12 @@
 import Booking from "../modals/Booking.js"
 import Car from "../modals/Car.js"
 
-// Function to check availibility 
+// Function to check availability 
 const checkAvailability= async (car, pickupDate, returnDate) => {
    const bookings = await Booking.find({
     car,
     pickupDate: {$lte : returnDate} ,
-    returnDate: {gte : pickupDate} ,
+    returnDate: {$gte : pickupDate} ,
    })
    return bookings.length === 0;
 }
@@ -15,19 +15,19 @@ export const checkAvailabilityOfCar = async (req,res) => {
     try{
       const {location, pickupDate, returnDate } = req.body
 
-      // fetch availiable car for given location
-      const cars = await Car.find({location , isAvaliable:true})
+      // fetch available car for given location
+      const cars = await Car.find({location , isAvailable:true})
 
-      // check car availibility for given date range using promise
-      const avilablecarsPromises = cars.map(async(car)=>{
+      // check car availability for given date range using promise
+      const availableCarsPromises = cars.map(async(car)=>{
          const isAvailable = await checkAvailability(car._id, pickupDate, returnDate)
          return {...car._doc , isAvailable: isAvailable}
       })
 
-      let availiableCars = await Promise.all(avilablecarsPromises);
-      availiableCars = availiableCars.filter(car=> car.isAvailable === true)
+      let availableCars = await Promise.all(availableCarsPromises);
+      availableCars = availableCars.filter(car=> car.isAvailable === true)
 
-      res.json({ success: true, availiableCars });
+      res.json({ success: true, availableCars });
 
     }catch(error){
       console.log(error.message);
@@ -41,7 +41,7 @@ export const createBooking = async (req,res) => {
       const {_id} = req.user  
       const {car, pickupDate, returnDate } = req.body
 
-      // check car availibility for given date range using promise
+      // check car availability for given date range using promise
       const isAvailable = await checkAvailability(car, pickupDate, returnDate)
       if(!isAvailable){
         return res.json({ success: false, message: "Car is not available" });
@@ -86,7 +86,7 @@ export const getOwnerBookings = async (req,res)=>{
         return res.json({ success: false, message: "Unauthorized" });
       } 
 
-      const bookings = await Booking.find({ownre: req.user._id}).populate('car user').select("-user.password").sort({createdAt: -1})
+      const bookings = await Booking.find({owner: req.user._id}).populate('car user').select("-user.password").sort({createdAt: -1})
 
       res.json({ success: true, bookings});
 
@@ -107,10 +107,10 @@ export const changeBookingStatus = async (req,res)=>{
         return res.json({ success: false, message: "Unauthorized" });
       }
 
-      booking.status =status;
+      booking.status = status;
       await booking.save()
 
-       res.json({ success: true, message:"status Updated"});
+       res.json({ success: true, message:"Status Updated"});
     }catch(error){
       console.log(error.message);
       res.json({ success: false, message: error.message });

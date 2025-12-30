@@ -35,7 +35,7 @@ export const AppProvider = ({children}) => {
         }
     }
 
-    // Function to fetch all cars from  the server
+    // Function to fetch all cars from the server
     const fetchCars = async () => {
         try{
            const {data} = await axios.get('/api/user/cars')
@@ -56,7 +56,7 @@ export const AppProvider = ({children}) => {
     }
 
 
-    //useEffect to retrive the token from local storage
+    //useEffect to retrieve the token from local storage
     useEffect(()=>{
         const token = localStorage.getItem('token')
         setToken(token);

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { assets  } from '../../assets/assets';
+import { assets } from '../../assets/assets';
 import Title from '../../components/owner/Title'
 import { useAppContext } from '../../context/AppContext';
-import toast from 'react-hot-toast';
+import {toast} from 'react-hot-toast';
 
 const Dashboard = () => {
 

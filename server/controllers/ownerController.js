@@ -1,4 +1,3 @@
-import { format } from "path";
 import User from "../modals/User.js";
 import fs from "fs";
 import Car from "../modals/Car.js";
@@ -77,7 +76,7 @@ export const toggleCarAvailability = async (req, res) => {
      return res.json({ success: false, message: "Unauthorized" });   
     }
 
-    car.isAvaliable = !car.isAvaliable;
+    car.isAvailable = !car.isAvailable;
     await car.save()
 
     res.json({ success: true, message: 'Availability Toggled' });
@@ -94,13 +93,13 @@ export const deleteCar = async (req, res) => {
     const {carId} = req.body;
     const car = await Car.findById(carId);
 
-    //Checking if car belong to the user
+    //Checking if car belongs to the user
     if(car.owner.toString() !== _id.toString()){
      return res.json({ success: false, message: "Unauthorized" });   
     }
 
     car.owner = null;
-    car.isAvaliable=false;
+    car.isAvailable=false;
     await car.save()
 
     res.json({ success: true, message: 'Car Removed' });
@@ -146,7 +145,7 @@ export const getDashboardData = async (req, res) => {
 };
 
 // API to update user image
-export const  updateUserImage = async (req,res) => {
+export const updateUserImage = async (req,res) => {
    try{
      
      const {_id} = req.user
