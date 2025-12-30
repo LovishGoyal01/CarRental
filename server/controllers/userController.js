@@ -1,6 +1,7 @@
 import User from "../modals/User.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import Car from '../modals/Car.js'
 
 // Generate JWT Token
 const generateToken = (userId) => {
@@ -25,7 +26,7 @@ export const registerUser = async (req,res)=> {
      const hashedPassword = await bcrypt.hash(password, 10)
      const user = await User.create({name, email, password:hashedPassword })
      const token = generateToken(user._id.toString())
-     res.json({success:true , token})
+     res.json({success:true , token, message: 'Registration successful'})
 
     }catch(error){
       console.log(error.message);
@@ -49,7 +50,7 @@ export const loginUser = async (req,res) =>{
      }
      
      const token = generateToken(user._id.toString())
-     res.json({success:true , token})
+     res.json({success:true , token,  message:'Login successful'})
 
     }catch(error){
       console.log(error.message);
@@ -62,6 +63,17 @@ export const getUserData = async (req,res) => {
     try{
       const {user} = req;  
       res.json({success: true, user})
+    }catch(error){
+      console.log(error.message);
+      res.json({success:false , message:error.message}) 
+    }
+}
+
+// Get all cars for frontend
+export const getCars = async (req,res) => {
+    try{
+       const cars = await Car.find({isAvaliable: true})
+       res.json({success: true, cars})
     }catch(error){
       console.log(error.message);
       res.json({success:false , message:error.message}) 

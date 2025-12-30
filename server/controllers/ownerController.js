@@ -3,6 +3,7 @@ import User from "../modals/User.js";
 import fs from "fs";
 import Car from "../modals/Car.js";
 import Booking from "../modals/Booking.js";
+import imagekit from "../configs/imageKit.js";
 
 // API to change role of user
 export const changeRoleToOwner = async (req,res) => {
@@ -119,10 +120,10 @@ export const getDashboardData = async (req, res) => {
     }
 
     const cars = await Car.find({owner: _id });
-    const bookings = (await Booking.find({owner: _id }).populate("car")).sort({createdAt: -1});
+    const bookings = await Booking.find({owner: _id }).populate("car").sort({createdAt: -1});
 
     const pendingBookings = await Booking.find({owner: _id, status: "pending" })
-    const comletedBookings = await Booking.find({owner: _id, status: "confirmed" })
+    const completedBookings = await Booking.find({owner: _id, status: "confirmed" })
 
     //  Calculate monthlyRevenue from bookings where status is confirmed
     const monthlyRevenue = bookings.slice().filter(booking => booking.status === 'confirmed').reduce((acc,booking)=> acc + booking.price , 0)
@@ -131,8 +132,8 @@ export const getDashboardData = async (req, res) => {
       totalCars: cars.length,
       totalBookings: bookings.length,
       pendingBookings: pendingBookings.length,
-      comletedBookings: comletedBookings.length,
-      recentBookins: bookings.slice(0,3), 
+      completedBookings: completedBookings.length,
+      recentBookings: bookings.slice(0,3), 
       monthlyRevenue
     }
     
