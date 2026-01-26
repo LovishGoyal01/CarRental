@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   token: localStorage.getItem("token") || null,
@@ -32,6 +33,7 @@ const appSlice = createSlice({
       state.isOwner = false;
       state.showLogin = false;
       localStorage.removeItem("token");
+      delete axios.defaults.headers.common["Authorization"];
     },
 
     setPickupDate: (state, action)=>{
