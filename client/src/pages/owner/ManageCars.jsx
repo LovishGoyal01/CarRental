@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets';
 import Title from '../../components/owner/Title'
-import { useAppContext } from '../../context/AppContext'
 import {toast} from "react-hot-toast"
+import axios from "axios"
+import { useSelector } from 'react-redux';
 
 const ManageCars = () => {
 
-  const {isOwner, axios, currency} = useAppContext()
+  const Base_URL = import.meta.env.VITE_BASE_URL
+  const currency = import.meta.env.VITE_CURRENCY 
+
+  const isOwner = useSelector((store=>store.app.isOwner))
 
   const [cars , setCars] = useState([]);
 
   const fetchOwnerCars = async () => {
      try{
-        const {data} = await axios.get('/api/owner/cars')
+        const {data} = await axios.get(Base_URL + '/api/owner/cars')
         if(data.success){
           setCars(data.cars)
         }else{
@@ -30,7 +34,7 @@ const ManageCars = () => {
 
         if(!confirm) return null
 
-        const {data} = await axios.post('/api/owner/delete-car' , {carId})
+        const {data} = await axios.post(Base_URL + '/api/owner/delete-car' , {carId})
         if(data.success){
           toast.success(data.message)
           fetchOwnerCars()
@@ -44,7 +48,7 @@ const ManageCars = () => {
 
      const toggleAvailability = async (carId) => {
      try{
-        const {data} = await axios.post('/api/owner/toggle-car' , {carId})
+        const {data} = await axios.post(Base_URL + '/api/owner/toggle-car' , {carId})
         if(data.success){
           toast.success(data.message)
           fetchOwnerCars()
@@ -84,24 +88,24 @@ const ManageCars = () => {
                     <tr key={index} className="border-t border-borderColor">
                      
                       <td className="p-3 flex items-center gap-3">
-                        <img src={car.image} alt="" className="h-12 w-12 aspect-square rounded-md object-cover" />
+                        <img src={car?.image} alt="" className="h-12 w-12 aspect-square rounded-md object-cover" />
                         <div className="max-md:hidden">
-                          <p className="font-medium">{car.brand} {car.model}</p>
-                          <p className="text-xs text-gray-500">{car.seating_capacity} • {car.transmission}</p>
+                          <p className="font-medium">{car?.brand} {car?.model}</p>
+                          <p className="text-xs text-gray-500">{car?.seating_capacity} • {car?.transmission}</p>
                         </div>
                       </td>
 
-                      <td className="p-3 max-md:hidden">{car.category}</td>
-                      <td className="p-3">{currency}{car.pricePerDay}/day</td>
+                      <td className="p-3 max-md:hidden">{car?.category}</td>
+                      <td className="p-3">{currency}{car?.pricePerDay}/day</td>
                       <td className="p-3 max-md:hidden">
-                        <span className={`px-3 py-1 rounded-full text-xs ${car.isAvailable ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500" }`}  >
-                           {car.isAvailable ? "Available" : "Unavailable"}
+                        <span className={`px-3 py-1 rounded-full text-xs ${car?.isAvailable ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500" }`}  >
+                           {car?.isAvailable ? "Available" : "Unavailable"}
                         </span>
                       </td>
                       <td className="flex items-center p-3">
-                        <img onClick={()=> toggleAvailability(car._id)} src={car.isAvailable ? assets.eye_close_icon : assets.eye_icon} alt="" className="cursor-pointer"/>
+                        <img onClick={()=> toggleAvailability(car?._id)} src={car?.isAvailable ? assets.eye_close_icon : assets.eye_icon} alt="" className="cursor-pointer"/>
                        
-                        <img onClick={()=> deleteCar(car._id)} src={assets.delete_icon} alt="" className="cursor-pointer"/>
+                        <img onClick={()=> deleteCar(car?._id)} src={assets.delete_icon} alt="" className="cursor-pointer"/>
                       </td>
                    </tr>
 

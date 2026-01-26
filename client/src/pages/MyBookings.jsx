@@ -1,19 +1,23 @@
- import React, { useEffect, useState } from 'react'
- import Title from '../components/Title'
- import { assets } from '../assets/assets'
- import { useAppContext } from "../context/AppContext"
+import React, { useEffect, useState } from 'react'
+import Title from '../components/Title'
+import { assets } from '../assets/assets'
 import {toast} from 'react-hot-toast'
 import {motion} from 'motion/react'
+import axios from "axios"
+import { useSelector } from 'react-redux'
  
  const MyBookings = () => {
 
-   const {axios, currency, user} =  useAppContext()
+   const Base_URL = import.meta.env.VITE_BASE_URL
+   const currency = import.meta.env.VITE_CURRENCY 
+
+   const user = useSelector((store)=>store.user)
 
    const [bookings , setBookings] = useState([])
 
    const fetchMyBookings = async () => {
      try{
-       const {data} = await axios.get('/api/bookings/user')
+       const {data} = await axios.get(Base_URL + '/api/bookings/user')
        if(data.success){
           setBookings(data.bookings)
        }else{

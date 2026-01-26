@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import NavbarOwner from '../../components/owner/NavbarOwner'
 import Sidebar from '../../components/owner/Sidebar'
-import { Outlet } from 'react-router-dom'
-import { useAppContext } from '../../context/AppContext'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Layout = () => {
  
-  const { isOwner, navigate } = useAppContext();
+  const navigate = useNavigate();
+
+  const isOwner = useSelector((store)=>store.app.isOwner);
 
   useEffect(()=>{
     if(!isOwner){

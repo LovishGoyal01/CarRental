@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import Title from '../../components/owner/Title'
-import { assets } from '../../assets/assets';
-import { useAppContext } from '../../context/AppContext';
+import { assets, cityList } from '../../assets/assets';
 import {toast} from 'react-hot-toast';
+import axios from "axios"
 
 const AddCar = () => {
 
-  const {axios, currency} = useAppContext() 
+  const Base_URL = import.meta.env.VITE_BASE_URL
+  const currency = import.meta.env.VITE_CURRENCY 
 
   const [image, setImage] = useState(null);
   const [car,setCar] =useState({
@@ -34,7 +35,7 @@ const AddCar = () => {
        formData.append('image',image)
        formData.append('carData', JSON.stringify(car))
 
-       const {data} = await axios.post('/api/owner/add-car', formData)
+       const {data} = await axios.post(Base_URL + '/api/owner/add-car', formData)
 
        if(data.success){
          toast.success(data.message)
@@ -115,6 +116,8 @@ const AddCar = () => {
                     value={car.category} 
                  >
                    <option value="">Select a category</option>
+                   <option value="Sports">Sports</option>
+                   <option value="Luxury">Luxury</option>
                    <option value="Sedan">Sedan</option>
                    <option value="SUV">SUV</option>
                    <option value="Van">Van</option>
@@ -164,11 +167,8 @@ const AddCar = () => {
                  <select onChange={(e) => setCar({ ...car, location: e.target.value })} className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none"
                     value={car.location} 
                  >
-                   <option value="">Select a Location</option>
-                   <option value="New York">New York</option>
-                   <option value="Los Angeles">Los Angeles</option>
-                   <option value="Houston">Houston</option>
-                   <option value="Chicago">Chicago</option>
+                    <option value="">Select a Location</option>
+                    {cityList.map((city) => ( <option key={city} value={city}>{city}</option> ))}
                  </select>
             </div>
 
@@ -185,12 +185,9 @@ const AddCar = () => {
                {isLoading ? 'Listing...' : 'List Your Car'}
             </button>
 
-
        </form>
 
-
     </div>
-
   )
 }
 

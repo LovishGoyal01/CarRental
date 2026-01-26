@@ -2,13 +2,20 @@ import React , {useState} from 'react'
 import { assets , ownerMenuLinks } from '../../assets/assets'
 import { useLocation } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
-import { useAppContext } from '../../context/AppContext'
 import { toast } from 'react-hot-toast'
+import axios from "axios"
+import { useDispatch, useSelector } from 'react-redux'
+import { addUser } from '../../store/userSlice'
 
 const Sidebar = () => {
 
-  const {user, axios, fetchUser} = useAppContext( );
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const Base_URL = import.meta.env.VITE_BASE_URL
+
+  const user = useSelector((store)=>store.user);
+
   const [image, setImage] = useState('');
 
   const updateImage = async () => {
@@ -16,9 +23,9 @@ const Sidebar = () => {
         const formData = new FormData()
         formData.append('image',image)
 
-        const {data} = await axios.post('/api/owner/update-image',formData)
+        const {data} = await axios.post(Base_URL + '/api/owner/update-image',formData)
         if(data.success){
-          fetchUser();
+          dispatch(addUser(data.user));
           toast.success(data.message)
           setImage('')
         }else{
@@ -65,9 +72,7 @@ const Sidebar = () => {
            ))}
          </div>
 
-
     </div>
-
   )
 }
 

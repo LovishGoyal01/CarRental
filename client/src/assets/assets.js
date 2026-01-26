@@ -42,7 +42,7 @@ import car_image3 from "./car_image3.png"
 import car_image4 from "./car_image4.png"
 import defaultAvatar from "./defaultAvatar.jpg"
 
-export const cityList = ['New York', 'Los Angeles', 'Houston', 'Chicago']
+export const cityList = [ "Bathinda", "Amritsar", "Ludhiana", "Jalandhar", "Patiala", "Mohali"];
 
 export const assets = {
     logo,
@@ -240,3 +240,25 @@ export const dummyDashboardData = {
     ],
     "monthlyRevenue": 840
 }
+
+export const testimonials = [
+  {
+    name: "Harpreet Kaur",
+    location: "Amritsar, Punjab",
+    image: assets.testimonial_image_1,
+    testimonial: "The car was clean, comfortable, and perfect for our family trip. The booking process was simple and hassle-free."
+  },
+  {
+    name: "Gurleen Kaur",
+    location: "Ludhiana, Punjab",
+    image: assets.testimonial_image_2,
+    testimonial: "Excellent service and well-maintained cars. Customer support was very responsive and helpful throughout the journey."
+  },
+  {
+    name: "Manpreet Singh",
+    location: "Jalandhar, Punjab",
+    image: assets.defaultAvatar,
+    testimonial: "Affordable prices and smooth pickup experience. I would definitely recommend this car rental service to others."
+  }
+];
+

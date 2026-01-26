@@ -1,26 +1,30 @@
-import React from 'react'
-import { useAppContext } from '../context/AppContext';
+import React, { useState } from 'react'
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import axios from "axios"
+import { useDispatch, useSelector } from 'react-redux';
+import { setShowLogin, setToken } from '../store/appSlice';
 
 const Login = () => {
 
-  const {setShowLogin, axios, setToken, navigate} = useAppContext()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const Base_URL = import.meta.env.VITE_BASE_URL
 
-  const [state, setState] = React.useState("login");
-  const [name, setName] = React.useState(""); 
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [state, setState] = useState("login");
+  const [name, setName] = useState(""); 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const onSubmitHandler = async (event) => {
     try{
        event.preventDefault()
-       const {data} = await axios.post(`/api/user/${state}` , {name,email,password})
+       const {data} = await axios.post(Base_URL + `/api/user/${state}` , {name, email, password})
 
        if(data.success){
          navigate('/')
-         setToken(data.token)
-         localStorage.setItem('token', data.token)
-         setShowLogin(false)
+         dispatch(setToken(data.token));
+         dispatch(setShowLogin(false));
          toast.success(data.message)
        }else{
           toast.error(data.message)

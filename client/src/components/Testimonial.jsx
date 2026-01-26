@@ -1,30 +1,9 @@
 import React from 'react'
 import Title from './Title'
-import { assets } from '../assets/assets';
+import { assets, testimonials } from '../assets/assets';
 import {motion} from "motion/react"
 
 const Testimonial = () => {
-
-  const testimonials = [
-        { 
-             name: "Emma Rodriguez",
-             location: "Barcelona, Spain", 
-             image: assets.testimonial_image_1,
-             testimonial: "I have rented cars from various companies, but the experience with car rental was exceptional"
-        },
-        {
-             name: "Liam Thompson",
-             location: "London, UK",
-             image: assets.testimonial_image_2,
-             testimonial: "The booking process was smooth and the car was in perfect condition. Highly reliable service!"
-        },
-        {
-             name: "Sophia Müller",
-             location: "Berlin, Germany",
-             image: assets.defaultAvatar,
-             testimonial: "Great selection of cars and excellent customer support. I felt confident and safe throughout my trip."
-        }
-    ];
 
   return (
     <div className="py-28 px-6 md:px-16 lg:px-24 xl:px-44">

@@ -1,17 +1,18 @@
 import React ,{useState , useEffect} from 'react'
 import Title from '../../components/owner/Title';
-import { useAppContext } from '../../context/AppContext'
 import {toast} from "react-hot-toast"
+import axios from "axios"
 
 const ManageBookings = () => {
-
-  const { axios, currency} = useAppContext()  
+  
+  const currency = import.meta.env.VITE_CURRENCY  
+  const Base_URL = import.meta.env.VITE_BASE_URL 
   
   const [bookings , setBookings] = useState([]);
   
   const fetchOwnerBookings = async () => {
      try{
-       const {data} = await axios.get('/api/bookings/owner')
+       const {data} = await axios.get(Base_URL + '/api/bookings/owner')
        data.success ? setBookings(data.bookings) : toast.error(data.message)
      }catch(error){
        toast.error(error.message)
@@ -20,7 +21,7 @@ const ManageBookings = () => {
 
   const changeBookingStatus = async (bookingId, status) => {
      try{
-       const {data} = await axios.post('/api/bookings/change-status' , {bookingId , status})
+       const {data} = await axios.post(Base_URL + '/api/bookings/change-status' , {bookingId , status})
        if(data.success){
          toast.success(data.message)
          fetchOwnerBookings()
@@ -58,11 +59,11 @@ const ManageBookings = () => {
                     <tr key={index} className="border-t border-borderColor text-gray-500 ">
                      
                        <td className="p-3 flex items-center gap-3">
-                         <img src={booking.car.image} alt="" className="h-12 w-12 aspect-square rounded-md object-cover" />
-                         <p className="font-medium max-md:hidden">{booking.car.brand} {booking.car.model}</p>
+                         <img src={booking.car?.image} alt="" className="h-12 w-12 aspect-square rounded-md object-cover" />
+                         <p className="font-medium max-md:hidden">{booking.car?.brand} {booking.car?.model}</p>
                        </td>
                      
-                       <td className='p-3 max-md:hidden' >{booking.pickupDate.split('T')[0]} to {booking.returnDate.split('T')[0]}</td>
+                       <td className='p-3 max-md:hidden' >{booking.pickupDate?.split('T')[0]} to {booking.returnDate?.split('T')[0]}</td>
                        <td className="p-3">{currency}{booking.price}</td>
                        <td className="p-3 max-md:hidden">
                          <span className="bg-gray-100 px-3 py-1 rounded-full text-xs">

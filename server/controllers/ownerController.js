@@ -172,13 +172,13 @@ export const updateUserImage = async (req,res) => {
 
       const image = optimizedImageUrl;
 
-      await User.findByIdAndUpdate(_id, {image})
+      const user = await User.findByIdAndUpdate(_id, {image})
 
-      res.json({ success: true, message: "Image Updated" });
+      res.json({ success: true, message: "Image Updated", user });
 
-   } catch (error) {
-    console.log(error.message);
-    res.json({ success: false, message: error.message });
-  }
+   }catch(error) {
+      console.log(error.message);
+      res.json({ success: false, message: error.message });
+   }
 }
 

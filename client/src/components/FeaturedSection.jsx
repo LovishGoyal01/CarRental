@@ -2,12 +2,17 @@ import React from 'react'
 import Title from './Title'
 import { assets } from '../assets/assets'
 import CarCard from './CarCard'
-import { useAppContext } from '../context/AppContext'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 import {motion} from "motion/react"
 
 const FeaturedSection = () => {
 
-  const {cars , navigate} = useAppContext()
+  const navigate = useNavigate();
+
+  const cars = useSelector((store)=>store.cars)
+
+  if(!cars) return <h1>Loading</h1>
 
   return (
     <motion.div initial={{opacity:0, y:40}} whileInView={{opacity:1, y:0}} transition={{duration:1, ease:"easeOut"}} className="flex flex-col items-center py-24 px-6 md:px-16 lg:px-24 xl:px-32">

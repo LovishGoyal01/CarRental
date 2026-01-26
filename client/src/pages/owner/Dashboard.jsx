@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets';
 import Title from '../../components/owner/Title'
-import { useAppContext } from '../../context/AppContext';
 import {toast} from 'react-hot-toast';
+import axios from "axios"
+import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
 
-  const {axios, isOwner, currency} = useAppContext()
+  const Base_URL = import.meta.env.VITE_BASE_URL
+  const currency = import.meta.env.VITE_CURRENCY 
+
+  const isOwner = useSelector((store)=>store.app.isOwner);
 
   const [data , setData] = useState({
     totalCars : 0,
@@ -26,7 +30,7 @@ const Dashboard = () => {
 
   const fetchDashboardData = async ()=>{
      try{
-       const {data} = await axios.get('/api/owner/dashboard')
+       const {data} = await axios.get(Base_URL + '/api/owner/dashboard')
        if(data.success){
           setData(data.dashboardData)
        }else{
@@ -76,13 +80,13 @@ const Dashboard = () => {
                       </div>
 
                       <div>
-                        <p>{booking.car.brand} {booking.car.model}</p>
-                        <p className="text-sm text-gray-500">{booking.createdAt.split('T')[0]}</p>
+                        <p>{booking.car?.brand} {booking.car?.model}</p>
+                        <p className="text-sm text-gray-500">{booking.createdAt?.split('T')[0]}</p>
                       </div>
                     </div>
                  
                     <div className="flex items-center gap-2 font-medium">
-                      <p className="text-sm text-gray-500">{currency}{booking.price}</p>
+                      <p className="text-sm text-gray-500">{currency}{booking?.price}</p>
                       <p className="px-3 py-0.5 border border-borderColor rounded-full text-sm">{booking.status}</p>
                     </div>
 

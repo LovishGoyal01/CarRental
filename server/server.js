@@ -12,9 +12,18 @@ const app = express();
 // Connect Database
 await connectDB();
 
-// Midleware
-app.use(cors());
+// Middleware
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://car-rental-frontend.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
 app.use(express.json());
+
 
 app.get('/' , (req,res) => res.send("server is running") )
 app.use('/api/user',userRouter)

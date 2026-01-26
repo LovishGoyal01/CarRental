@@ -29,7 +29,6 @@ const Footer = () => {
                            <li><Link to="/cars">Browse Cars</Link></li>
                            <li><Link to="/owner">List Your Car</Link></li>
                            <li><Link to="/my-bookings">Your Bookings</Link></li>
-
                        </ul>
                     </div>
                     <div>
@@ -44,11 +43,10 @@ const Footer = () => {
                     <div>
                        <h2 className='text-base font-medium text-gray-800 uppercase'>Contact</h2>
                        <ul className='mt-3 flex flex-col gap-1.5 '>
-                           <li>1234 Luxury Drive</li>
-                           <li>San Francisco, CA 94107</li>
+                           <li>Harpal Nagar, Street No. 7</li>
+                           <li>Bathinda, Punjab, India • 151001</li>
                            <li><a href="tel:+917009216273">+91 7009216273</a></li>
                            <li><a href="mailto:goyallovish852@gmail.com">goyallovish852@gmail.com</a></li>
-
                        </ul>
                     </div> 
                 </motion.div>    

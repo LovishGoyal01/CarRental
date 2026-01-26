@@ -3,11 +3,14 @@ import Title from '../components/Title'
 import {assets } from '../assets/assets'
 import CarCard from '../components/CarCard'
 import { useSearchParams } from 'react-router-dom'
-import { useAppContext } from '../context/AppContext'
 import {toast} from 'react-hot-toast'
 import {motion} from 'motion/react'
+import axios from "axios"
+import { useSelector } from 'react-redux'
 
 const Cars = () => {
+
+  const Base_URL = import.meta.env.VITE_BASE_URL
 
   // Getting search params from url
   const [searchParams] = useSearchParams() 
@@ -15,7 +18,7 @@ const Cars = () => {
   const pickupDate = searchParams.get('pickupDate')
   const returnDate = searchParams.get('returnDate')
 
-  const { cars, axios } = useAppContext()
+  const cars = useSelector((store)=>store.cars)
 
   const [input , setInput] = useState('');
 
@@ -39,7 +42,7 @@ const Cars = () => {
 
   const searchCarAvailability = async () => {
     try{
-      const {data} = await axios.post('/api/bookings/check-availability' , { location:pickupLocation, pickupDate, returnDate })
+      const {data} = await axios.post(Base_URL + '/api/bookings/check-availability' , { location:pickupLocation, pickupDate, returnDate })
       if(data.success){
          setFilteredCars(data.availableCars)
          if(data.availableCars.length === 0){
