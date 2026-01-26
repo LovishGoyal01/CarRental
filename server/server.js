@@ -16,7 +16,7 @@ await connectDB();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://car-rental-frontend.vercel.app"
+    "https://car-rental-nine-chi.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
