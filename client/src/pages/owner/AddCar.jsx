@@ -120,7 +120,7 @@ const AddCar = () => {
                    <option value="Luxury">Luxury</option>
                    <option value="Sedan">Sedan</option>
                    <option value="SUV">SUV</option>
-                   <option value="Van">Van</option>
+                   <option value="Supercar">Supercar</option>
                  </select>
                </div>
             </div>
