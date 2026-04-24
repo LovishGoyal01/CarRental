@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+  TestNG Suite Configuration for the CarRental Selenium Test Suite
+  Run with: mvn test  (from the selenium-tests/ directory)
+-->
+<suite name="CarRental E2E Test Suite" parallel="none" verbose="2">
+
+    <!-- ──────────────────────────────────────────────────────────────────────
+         Full end-to-end smoke test (original primary journey)
+    ────────────────────────────────────────────────────────────────────────── -->
+    <test name="Full User Journey">
+        <classes>
+            <class name="com.testing.CarRentalFullTest" />
+        </classes>
+    </test>
+
+    <!-- ──────────────────────────────────────────────────────────────────────
+         User authentication (registration, login, logout)
+    ────────────────────────────────────────────────────────────────────────── -->
+    <test name="User Authentication Tests">
+        <classes>
+            <class name="com.testing.UserAuthenticationTest" />
+        </classes>
+    </test>
+
+    <!-- ──────────────────────────────────────────────────────────────────────
+         Car search and filter functionality
+    ────────────────────────────────────────────────────────────────────────── -->
+    <test name="Car Search and Filter Tests">
+        <classes>
+            <class name="com.testing.CarSearchAndFilterTest" />
+        </classes>
+    </test>
+
+    <!-- ──────────────────────────────────────────────────────────────────────
+         Booking management (create, view, access)
+    ────────────────────────────────────────────────────────────────────────── -->
+    <test name="Booking Management Tests">
+        <classes>
+            <class name="com.testing.BookingManagementTest" />
+        </classes>
+    </test>
+
+    <!-- ──────────────────────────────────────────────────────────────────────
+         UI and navigation validation
+    ────────────────────────────────────────────────────────────────────────── -->
+    <test name="UI Validation Tests">
+        <classes>
+            <class name="com.testing.UIValidationTest" />
+        </classes>
+    </test>
+
+    <!-- ──────────────────────────────────────────────────────────────────────
+         Data and form validation
+    ────────────────────────────────────────────────────────────────────────── -->
+    <test name="Data Validation Tests">
+        <classes>
+            <class name="com.testing.DataValidationTest" />
+        </classes>
+    </test>
+
+</suite>

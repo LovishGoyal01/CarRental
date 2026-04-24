@@ -1,1 +1,7 @@
 node_modules
+
+# Maven build output
+selenium-tests/target/
+
+# Test screenshots (generated at runtime)
+selenium-tests/screenshots/
